@@ -1,11 +1,25 @@
 import http from 'node:http';
+import { getDataFromDb } from './database/database.js';
 
-// console.log("Hello World!");
+const hostname = '127.0.0.1'
+const port = 8000
 
-const PORT = 8000;
+const server = http.createServer(async (request, response) => {
+  const route = request.url
+  const method = request.method
 
-const server = http.createServer((request, response) => {
-  response.end("Hello from my API!");
+  if (route === '/api' && method === 'GET') {
+    const destinations = await getDataFromDb()
+    response.setHeader('Content-Type', 'application/json')
+    response.statusCode = 200;
+    response.write(JSON.stringify(destinations))
+  }
+
+  response.end(() => {
+    console.log('Request is finished');
+  })
 })
 
-server.listen(PORT, () => console.log(`Server is running on port ${PORT}`))
+server.listen(port, hostname, () => {
+  console.log(`Server is running on port http://${hostname}:${port}`)
+})
