@@ -2,8 +2,8 @@ import http from 'node:http'
 import { getDataFromDb } from './database/database.js'
 import { handleApiResponse, filterPlaces, filterPlacesByQueryParams } from './utils/utilities.js';
 
-const hostname = '127.0.0.1'
-const port = 8000
+const HOST = '127.0.0.1'
+const PORT = 8000
 
 const server = http.createServer(async (req, res) => {
   const route = req.url
@@ -53,6 +53,6 @@ const server = http.createServer(async (req, res) => {
 })
 
 
-server.listen(port, hostname, () => {
-  console.log(`Server is running on port http://${hostname}:${port}`)
+server.listen(PORT, HOST, () => {
+  console.log(`Server is running at ${HOST}:${PORT}`)
 })
